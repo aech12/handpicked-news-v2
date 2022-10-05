@@ -1,4 +1,8 @@
-import { setActivePinia, createPinia } from 'pinia'
+// import { setActivePinia, createPinia } from 'pinia'
 import '@testing-library/jest-dom/extend-expect'
 
-setActivePinia(createPinia())
+// setActivePinia(createPinia())
+
+vi.mock('#imports', () => ({
+  definePageMeta: (meta: any) => {},
+}))
