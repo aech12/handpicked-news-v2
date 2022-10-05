@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest'
 import {render, fireEvent} from '@testing-library/vue'
 import Component from './Test.vue'
 
