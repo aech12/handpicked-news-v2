@@ -1,9 +1,9 @@
 <template>
   <div>
-    <NuxtLink to="/">home </NuxtLink>
+    <!-- <NuxtLink to="/">home </NuxtLink>
     <NuxtLink to="app">app </NuxtLink>
     <NuxtLink to="login">login </NuxtLink>
-    <NuxtLink to="saved">saved </NuxtLink>
+    <NuxtLink to="saved">saved </NuxtLink> -->
     <AuthNavbar />
     <NuxtPage />
   </div>
