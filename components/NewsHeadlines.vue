@@ -41,7 +41,6 @@ const { data: saves } = await useAsyncData("saves", async () => {
     .from<Saved>("saves")
     .select("id, title")
     .eq("user", user.value.id)
-    .order("created_at");
 
   // TEMP FiX: adding this map to filter more easily on ArticlePreview
   return data.map((saved) => saved.title);

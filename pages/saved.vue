@@ -9,7 +9,6 @@ definePageMeta({
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 const loading = ref(null);
-const newSaved = ref("SOME TITLE");
 
 const { data: saves } = await useAsyncData("saves", async () => {
   const { data } = await client

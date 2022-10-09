@@ -4,28 +4,26 @@
     <div
       class="my-2 w-full max-w-xl flex flex-col md:items-center md:flex-row md:space-between space-y-2 md:space-y-0"
     >
-      <div class="flex space-x-2 mx-4">
+      <div class="flex space-x-2 mx-2">
         <ListSelect
           name="country"
           :selected="countrySelected"
-          :options="countries"
-          category="Country"
-          @update="
-            (event) => {
-              countrySelected = event.target.value;
-              onParamsShouldUpdate(event);
+          :items="countries"
+          @updateInput="
+            event => {
+              countrySelected = event.target.value
+              onParamsShouldUpdate(event)
             }
           "
         />
         <ListSelect
           name="category"
           :selected="categorySelected"
-          :options="categories"
-          category="Category"
-          @update="
-            (event) => {
-              categorySelected = event.target.value;
-              onParamsShouldUpdate(event);
+          :items="categories"
+          @updateInput="
+            event => {
+              categorySelected = event.target.value
+              onParamsShouldUpdate(event)
             }
           "
         />
@@ -33,97 +31,89 @@
       <SearchForm
         name="search"
         :search="search"
-        @update="(value) => (search = value)"
-        :onParamsShouldUpdate="onParamsShouldUpdate"
+        @input="e => (search = e.target.value)"
+        @handleSubmit="e => onParamsShouldUpdate(e)"
       />
     </div>
-    <NewsHeadlines :articles="data" :pending="pending" :error="error" />
+    <NewsHeadlines :articles="articles" :pending="pending" :error="error" />
     <PageBar :page="page" :previousPage="previousPage" :nextPage="nextPage" />
   </div>
 </template>
 
 <script setup>
-const page = ref(1);
-const params = ref("");
-// inputs
-const search = ref("");
-const searchParams = ref("");
-const countrySelected = ref("");
+const page = ref(1)
+// inputs state
+const search = ref('argentina football')
+const countrySelected = ref('')
 const countries = ref([
-  { text: "China", paramVal: "cn" },
-  { text: "Netherlands", paramVal: "nl" },
-  { text: "Singapore", paramVal: "si" },
-  { text: "USA", paramVal: "us" },
-]);
-const categorySelected = ref("");
+  { text: 'China', paramVal: 'cn' },
+  { text: 'Netherlands', paramVal: 'nl' },
+  { text: 'Singapore', paramVal: 'si' },
+  { text: 'USA', paramVal: 'us' },
+])
+const categorySelected = ref('')
 const categories = ref([
-  { text: "Business", paramVal: "business" },
-  { text: "General", paramVal: "general" },
-  { text: "Science", paramVal: "science" },
-  { text: "Sports", paramVal: "sports" },
-  { text: "Technology", paramVal: "technology" },
-]);
+  { text: 'Business', paramVal: 'business' },
+  { text: 'General', paramVal: 'general' },
+  { text: 'Science', paramVal: 'science' },
+  { text: 'Sports', paramVal: 'sports' },
+  { text: 'Technology', paramVal: 'technology' },
+])
 
-const { data, pending, error } = await useAsyncData(
-  "getArticles",
+const {
+  data: articles,
+  pending,
+  error,
+  refresh,
+} = await useAsyncData(
+  'getArticles',
   () =>
     $fetch(`/api/getArticles`, {
       params: {
         page: page.value,
-        search: searchParams.value,
-        country: countrySelected.value,
-        category: categorySelected.value,
+        search: encodeURIComponent(search.value.toLocaleLowerCase()),
+        country: encodeURIComponent(countrySelected.value),
+        category: encodeURIComponent(categorySelected.value),
       },
     }),
   {
-    watch: [params],
-    headers: useRequestHeaders(["cookie"]),
+    watch: [page],
+    headers: useRequestHeaders(['cookie']),
   }
-);
+)
 
 // methods
 function previousPage() {
   if (page.value > 0) {
-    params.value = updatePageInParams(params.value, page.value, page.value - 1);
-    page.value--;
+    page.value--
   }
 }
 
 function nextPage() {
-  params.value = updatePageInParams(params.value, page.value, page.value + 1);
-  page.value++;
+  page.value++
 }
 
 function onParamsShouldUpdate(e) {
-  //   console.log(e.target.value, "name", e.target.name);
-  if (e.target.value === "") return;
-  // reset state (except input that changed)
-  if (e.target.name !== "country") countrySelected.value = "";
-  if (e.target.name !== "category") categorySelected.value = "";
-  page.value = 1;
-  // // search 1st page
-  params.value =
-    `&page=1&` +
-    encodeURIComponent(e.target.name) +
-    "=" +
-    encodeURIComponent(e.target.value);
-  // TEMP FIX pass search with params to empty input
-  if (e.target.name === "search") {
-    searchParams.value = search.value;
-  } else {
-    searchParams.value = "";
-  }
-  search.value = "";
-}
+  // console.log(e.target.name)
+  // console.log(e.target.value)
 
-function updatePageInParams(params, page, newPage) {
-  return params.replace(page, newPage);
+  if (e.target.value === '') return
+
+  // set fetch params for search OR select input options
+  if (e.target.name === 'search') {
+    countrySelected.value = ''
+    categorySelected.value = ''
+  } else {
+    search.value = ''
+  }
+  page.value = 1
+  refresh()
 }
 
 definePageMeta({
-  middleware: ["auth"],
-  layout: "base",
-});
+  middleware: ['auth'],
+  layout: 'base',
+})
 </script>
 
 <style></style>

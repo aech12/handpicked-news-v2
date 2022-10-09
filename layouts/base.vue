@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div class="bg-gray-600">
     <!-- <NuxtLink to="/">home </NuxtLink>
     <NuxtLink to="app">app </NuxtLink>
     <NuxtLink to="login">login </NuxtLink>
     <NuxtLink to="saved">saved </NuxtLink> -->
     <AuthNavbar />
     <NuxtPage />
+    <div class="h-screen bg-gray-600"></div>
   </div>
 </template>
 

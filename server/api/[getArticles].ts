@@ -1,38 +1,43 @@
-const baseUrl = "https://newsapi.org/v2/top-headlines";
-const searchUrl = "https://newsapi.org/v2/everything?sortBy=popularity";
+import { Response } from '~/types/getArticlesResponse'
+import { getNewsUrlParams } from '~/helpers/getNewsUrlParams'
+import resMock from '~/tests/mocks/getArticlesResponse.json'
 
-export default defineEventHandler(async (event) => {
+const baseUrl = 'https://newsapi.org/v2/top-headlines'
+const searchUrl = 'https://newsapi.org/v2/everything'
+
+export default defineEventHandler(async event => {
   //   throw new Error();
   //   return "test error";
 
-  const config = useRuntimeConfig();
-  const { page, search, country, category } = useQuery(event);
+  const config = useRuntimeConfig()
+  const { page, search, country, category } = getQuery(event)
+  console.log(
+    page,
+    'SEARCH',
+    search,
+    typeof search,
+    'C',
+    country,
+    'C',
+    category
+  )
 
-  let url = baseUrl;
+  let url = getNewsUrlParams({
+    baseUrl,
+    searchUrl,
+    search,
+    country,
+    category,
+  })
 
-  // search by str/country/category/all
-  if (search && search !== "") {
-    url = searchUrl;
-    url += `?q=${search}`;
-  } else if (country && country !== "") {
-    url += `?country=${country}`;
-  } else if (category && category !== "") {
-    url += `?category=${category}`;
-  } else {
-    url += "?country=us";
-  }
+  console.log('URL', url)
+  url += `&page=${page}&apiKey=${config.NEWSAPI_KEY}`
 
-  // add api token
-  url += `&page=${page}&apiKey=${config.NEWSAPI_KEY}`;
-  console.log("URL", url);
+  return resMock.articles
 
-  const res = await $fetch(url)
-    .then((resp) => {
-      return resp.articles;
-    })
-    .catch((error) => error);
+  // const res = await $fetch(encodeURIComponent(url))
+  // .then((response: Response) => response)
+  // .catch(error => error)
 
-  //   console.log("url", res);
-
-  return res;
-});
+  // return res.articles
+})
