@@ -7,20 +7,10 @@ const searchUrl = 'https://newsapi.org/v2/everything'
 
 export default defineEventHandler(async event => {
   //   throw new Error();
-  //   return "test error";
+  //   return { error: { message: "test error" } };
 
   const config = useRuntimeConfig()
   const { page, search, country, category } = getQuery(event)
-  console.log(
-    page,
-    'SEARCH',
-    search,
-    typeof search,
-    'C',
-    country,
-    'C',
-    category
-  )
 
   let url = getNewsUrlParams({
     baseUrl,
@@ -30,14 +20,15 @@ export default defineEventHandler(async event => {
     category,
   })
 
-  console.log('URL', url)
+  // console.log('URL', url)
   url += `&page=${page}&apiKey=${config.NEWSAPI_KEY}`
 
   return resMock.articles
+  // const res = await $fetch(url)
+  //   .then((response: Response) => response.articles)
+  //   .catch(error => error)
 
-  // const res = await $fetch(encodeURIComponent(url))
-  // .then((response: Response) => response)
-  // .catch(error => error)
+  // console.log('res', res)
 
-  // return res.articles
+  // return res
 })

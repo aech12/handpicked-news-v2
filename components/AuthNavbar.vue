@@ -2,7 +2,9 @@
   <va-navbar color="dark">
     <template #left>
       <NuxtLink to="/app">
-        <va-navbar-item class="text-lg hover:text-blue-400 transition">PickedNEWS</va-navbar-item>
+        <va-navbar-item class="text-lg hover:text-blue-400 transition"
+          >PickedNEWS</va-navbar-item
+        >
       </NuxtLink>
     </template>
     <template #center>
@@ -10,8 +12,18 @@
     </template>
     <template #right>
       <div v-if="user" class="space-x-2">
-        <NuxtLink to="/saved">
+        <NuxtLink v-if="route.path === '/saved'" to="/app">
           <va-button outline :rounded="false" color="white" text-color="white">
+            News
+          </va-button>
+        </NuxtLink>
+        <NuxtLink v-else to="/saved">
+          <va-button
+            outline
+            :rounded="false"
+            color="white"
+            text-color="white"
+          >
             Saved
           </va-button>
         </NuxtLink>
@@ -25,12 +37,15 @@
 </template>
 
 <script setup>
-const user = useSupabaseUser();
-const client = useSupabaseClient();
-const router = useRouter();
+const user = useSupabaseUser()
+const client = useSupabaseClient()
+const router = useRouter()
+const route = useRoute()
 
+console.log(route.path === '/saved')
+console.log(route.path === 'saved')
 async function handleSignout() {
-  await client.auth.signOut();
-  router.push({ path: "/login" });
+  await client.auth.signOut()
+  router.push({ path: '/login' })
 }
 </script>

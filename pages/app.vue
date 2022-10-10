@@ -99,7 +99,7 @@ function onParamsShouldUpdate(e) {
 
   if (e.target.value === '') return
 
-  // set fetch params for search OR select input options
+  // set fetch params for null EITHER search OR select
   if (e.target.name === 'search') {
     countrySelected.value = ''
     categorySelected.value = ''

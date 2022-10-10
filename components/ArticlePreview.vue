@@ -1,7 +1,7 @@
 <template>
   <li class="row" v-if="article">
     <a
-      src="url"
+      :src="article.url"
       noreferrer
       noopener
       class="h-min m-4 max-w-xs rounded overflow-hidden shadow-lg cursor-pointer"
@@ -26,7 +26,6 @@
           </div>
         </form>
         <p v-if="error" class="text-red-400">ERROR! {{ error.message }}</p>
-        {{ savedArticles.length }}
       </div>
     </a>
   </li>

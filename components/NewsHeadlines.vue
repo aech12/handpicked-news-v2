@@ -4,7 +4,10 @@
     <div v-else-if="error" class="pb-4 pt-2">
       <p>Error fetching</p>
     </div>
-    <ul v-else class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <ul
+      v-else
+      class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+    >
       <ArticlePreview
         v-for="article in articles"
         :key="article.title"
@@ -31,7 +34,7 @@ const user = useSupabaseUser()
 
 // initial saved articles fetch
 const { data: savedArticles } = await useAsyncData(
-  'saves',
+  'savedArticles',
   async (): Promise<SavedArticle[]> =>
     $fetch(`/api/savedArticles`, {
       method: 'get',
@@ -62,7 +65,7 @@ const removeSavedArticle = async (article): Promise<any> => {
   savedArticles.value = savedArticles.value.filter(
     item => item.title !== article.title
   )
-  const { data,error } = await client
+  const { data, error } = await client
     .from<SavedArticle>('savedArticles')
     .delete()
     .match({ title: article.title })
