@@ -5,7 +5,7 @@ import SignForm from '../components/SignForm.vue'
 definePageMeta({
   middleware: ['auth'],
   layout: 'base',
-  // pageTransition: { name: 'page', mode: 'out-in' },
+  pageTransition: { name: 'page', mode: 'out-in' },
 })
 
 const client = useSupabaseClient()

@@ -19,7 +19,8 @@ export default {
   props: {
     name: String,
     selected: String,
-    items: [{ text: String, paramVal: String }],
+    // items: [{ text: String, paramVal: String }],
+    items: Array,
   },
   methods: {
     capitalize(string) {
