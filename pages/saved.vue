@@ -1,81 +1,81 @@
 <script setup lang="ts">
-import { Saved } from "~/types/saves";
+import { SavedArticle } from '~/types/savedArticles'
 
 definePageMeta({
-  middleware: "auth",
-  layout: "base",
-});
+  middleware: 'auth',
+  layout: 'base',
+})
 
-const client = useSupabaseClient();
-const user = useSupabaseUser();
-const loading = ref(null);
-const newSaved = ref("SOME TITLE");
+const client = useSupabaseClient()
+const user = useSupabaseUser()
 
-const { data: saves } = await useAsyncData("saves", async () => {
-  const { data } = await client
-    .from<Saved>("saves")
-    .select("id, title")
-    .eq("user", user.value.id)
-    .order("created_at");
+const { data: savedArticles } = await useAsyncData(
+  'savedArticles',
+  async (): Promise<SavedArticle[]> =>
+    $fetch(`/api/savedArticles`, {
+      method: 'get',
+      params: {
+        user: user.value.id,
+      },
+      headers: useRequestHeaders(['cookie']),
+    })
+)
 
-  return data;
-});
-
-async function addSaved() {
-  if (newSaved.value.trim().length === 0) {
-    return;
-  }
-  loading.value = true;
-
-  const { data } = await client.from<Saved>("saves").upsert({
-    user: user.value.id,
-    title: newSaved.value,
-  });
-  saves.value.push(data[0]);
-  newSaved.value = "";
-  loading.value = false;
+const removeSavedArticle = async (article): Promise<any> => {
+  savedArticles.value = savedArticles.value.filter(
+    item => item.title !== article.title
+  )
+  const { data, error } = await client
+    .from<SavedArticle>('savedArticles')
+    .delete()
+    .match({ title: article.title })
+  return { data, error }
 }
-
-const removeSaved = async (saved: Saved) => {
-  saves.value = saves.value.filter((t) => t.id !== saved.id);
-  await client.from<Saved>("saves").delete().match({ id: saved.id });
-};
 </script>
 
 <template>
-  <div class="max-w-3xl mx-auto mt-2 flex flex-col text-center items-center">
+  <div class="max-w-5xl mx-auto mt-2 flex flex-col text-center items-center">
     <h2 class="text-3xl text-black w-full">Saved</h2>
     <div class="w-full my-[50px]">
-      <form class="flex gap-2 my-2" @submit.prevent="addSaved">
-        <button type="submit" variant="white">
-          {{ loading ? "SpinningIcon" : "Mock Add" }}
-        </button>
-      </form>
-      <div v-if="saves.length > 0" body-class="px-6 py-2 overflow-hidden">
-        <ul>
+      <div
+        v-if="savedArticles.length > 0"
+        body-class="px-6 py-2 overflow-hidden"
+      >
+        <ul
+          class="w-full px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
           <li
-            v-for="saved of saves"
-            :key="saved.id"
-            class="border-b border-gray-200 divide-y divide-gray-200"
+            v-for="article of savedArticles"
+            :key="article.id"
+           
           >
-            <div class="py-2">
+            <a src="article.url" noreferrer noopener  class="bg-gray-100 flex flex-col items-center rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-gray-100 cursor-pointer">
+              <img
+                v-bind:src="article.urlToImage"
+                class="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
+                :title="article.title"
+              />
               <div
-                :label="saved.title"
-                :name="String(saved.id)"
-                wrapper-class="flex items-center justify-between w-full"
+                class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-40 rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal"
               >
-                <p class="text-lg font-bold bg-gray-100 mx-4">
-                  {{ saved.title }}
-                </p>
-                <va-button
-                  @click="removeSaved(saved)"
-                  flat
-                  size="small"
-                  class="mt-1"
-                  >Remove</va-button
+                <div
+                  :label="article.title"
+                  :name="String(article.id)"
+                  wrapper-class="flex items-center justify-between w-full"
                 >
-              </div>
-            </div>
+                  <p class="text-lg font-bold mx-4">
+                    {{ article.title }}
+                  </p>
+                  <va-button
+                    @click="removeSavedArticle(article)"
+                    flat
+                    size="small"
+                    class="mt-1"
+                    >Remove</va-button
+                  >
+                </div>
+              </div></a
+            >
           </li>
         </ul>
       </div>

@@ -1,8 +1,9 @@
-<script lang="ts">
+<script>
 export default {
   props: {
     login: Function,
     signUp: Function,
+    checkEmail: false,
   },
   data: () => ({
     email: '',
@@ -15,14 +16,17 @@ export default {
     async sign() {
       this.pending = true
 
-      // call signUp or login
-      if (this.isSignUp === true) {
-        const { user, error } = await this.signUp(this.email, this.password)
-        if (error) this.error_auth = error.message
-      } else {
-        const { user, error } = await this.login(this.email, this.password)
-        if (error) this.error_auth = error.message
-      }
+      const { user, error } =
+        this.isSignUp === true
+          ? await this.signUp(this.email, this.password)
+          : await this.login(this.email, this.password)
+      if (error) this.error_auth = error.message
+
+      this.checkEmail = true
+      setTimeout(function () {
+        this.checkEmail = false
+      }, 4000)
+
       this.pending = false
     },
   },
@@ -81,5 +85,6 @@ export default {
         </va-button>
       </div>
     </form>
+    <p v-if="checkEmail">Check your email!</p>
   </div>
 </template>

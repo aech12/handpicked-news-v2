@@ -1,59 +1,77 @@
 <template>
-  <li class="row">
-    <div
+  <li class="row" v-if="article">
+    <a
+      :src="article.url"
+      noreferrer
+      noopener
       class="h-min m-4 max-w-xs rounded overflow-hidden shadow-lg cursor-pointer"
     >
-      <img class="w-full" v-bind:src="imgUrl" alt="" />
+      <img
+        class="w-full"
+        v-bind:src="article.urlToImage"
+        alt="article poster"
+      />
       <div class="px-6 py-4">
-        <div class="font-bold text-xl mb-2">{{ title }}</div>
+        <div class="font-bold text-xl mb-2">{{ article.title }}</div>
         <p class="text-gray-700 text-base">
-          {{ description }}
+          {{ article.description }}
         </p>
       </div>
       <div class="px-6 pt-0 pb-4 space-x-2">
-        <form class="flex gap-2 my-2" @submit.prevent="addSaved(title)">
-          <va-button
-            @click="removeSavedArticle(title)"
-            v-if="saves && saves.includes(title)"
-            outline
-            >Saved</va-button
-          >
-          <va-button type="submit" v-else> Save </va-button>
+        <form class="flex gap-2 my-2" @submit.prevent="handleSubmit">
+          <div v-if="fetching" class="w-full flex justify-center h-6">
+            <Spinner />
+          </div>
+          <div v-else>
+            <!-- <button type="submit" v-if="isArticleSaved" outline>Saved</button>
+            <button type="submit" v-else>Save</button> -->
+            <va-button type="submit" v-if="isArticleSaved" outline
+              >Saved</va-button
+            >
+            <va-button type="submit" v-else> Save </va-button>
+          </div>
         </form>
+        <p v-if="error" class="text-red-400">ERROR! {{ error.message }}</p>
       </div>
-    </div>
+    </a>
   </li>
 </template>
 
 <script>
 export default {
-  methods: {
-    async isArticleSaved(title) {
-      if (saves.length > 0) {
-        const saved = saves.filter((item) => item.title === title);
-        console.log("saved", saved);
-        return saved ? true : false;
-      }
-    },
-
-    async removeSavedArticle(title) {
-      if (saves.length > 0) {
-        const saved = saves.filter((item) => item.title === title);
-        removeSaved(saved[0]);
-      }
+  data: () => ({
+    fetching: false,
+    error: null,
+  }),
+  computed: {
+    isArticleSaved: function () {
+      return this.savedArticles.filter(
+        item => item.title === this.article.title
+      ).length > 0
+        ? true
+        : false
     },
   },
-};
-</script>
+  methods: {
+    async handleSubmit() {
+      this.error = null
+      this.fetching = true
 
-<script setup>
-const props = defineProps({
-  title: String,
-  imgUrl: String,
-  description: String,
-  saves: [String],
-  loading: String,
-  addSaved: Function,
-  removeSaved: Function,
-});
+      // call addArticle() if it's not saved, else delete
+      const { data, error } = this.isArticleSaved
+        ? await this.removeSavedArticle(this.article)
+        : await this.saveArticle(this.article)
+
+      if (error) this.error = error
+
+      this.fetching = false
+    },
+  },
+  props: {
+    article: Object,
+    savedArticles: Array,
+    saveArticle: Function,
+    removeSavedArticle: Function,
+  },
+}
 </script>

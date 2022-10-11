@@ -1,0 +1,45 @@
+{
+  "status": "ok",
+  "totalResults": 34,
+  "articles": [
+    {
+      "source": {
+        "id": null,
+        "name": "YouTube"
+      },
+      "author": null,
+      "title": "Iconic Easter Island statues damaged in wildfire - Reuters",
+      "description": "A number of Easter Island's iconic 'Moai' stone statues suffered irreparable damage after a wildfire swept through the island earlier this week, the island's...",
+      "url": "https://www.youtube.com/watch?v=ytd0lTqYm9s",
+      "urlToImage": "https://i.ytimg.com/vi/ytd0lTqYm9s/hqdefault.jpg",
+      "publishedAt": "2022-10-08T00:41:34Z",
+      "content": null
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "The Athletic"
+      },
+      "author": "The Athletic Staff",
+      "title": "Video of Warriors' Draymond Green, Jordan Poole altercation - The Athletic",
+      "description": "New video footage via TMZ has surfaced showing Wednesday’s altercation between Warriors teammates Draymond Green and Jordan Poole.\nThe video shows Green approaching Poole and coming chest-to-chest with him during a practice session. Poole then shoved Green, w…",
+      "url": "https://theathletic.com/3668215/2022/10/07/warriors-draymond-green-jordan-poole-fight/",
+      "urlToImage": "https://cdn.theathletic.com/app/uploads/2022/10/07085648/GettyImages-1240216890-1024x683.jpg",
+      "publishedAt": "2022-10-07T23:42:14Z",
+      "content": "New video footage via TMZ has surfaced showing Wednesday’s altercation between Warriors teammates Draymond Green and Jordan Poole.\r\nThe video shows Green approaching Poole and coming chest-to-chest w… [+301 chars]"
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "WABC-TV"
+      },
+      "author": null,
+      "title": "NYC asylum seeker crisis: Mayor Eric Adams declares state of emergency - WABC-TV",
+      "description": "On Friday, New York Mayor Eric Adams declared a state of emergency and announced an executive order to suspend land use requirements to help the city cope with the influx of people.",
+      "url": "https://abc7ny.com/asylum-seekers-nyc-immigration-humanitarian-relief-center-migrants/12302699/",
+      "urlToImage": "https://cdn.abcotvs.com/dip/images/12302837_100722-wabc-adams-migrants-split-img.jpg?w=1600",
+      "publishedAt": "2022-10-07T23:20:23Z",
+      "content": "NEW YORK CITY (WABC) -- The number of people in New York City shelters is setting new records daily amid the unyielding arrival of asylum seekers bused from Texas and elsewhere.\r\nOn Friday, New York … [+3175 chars]"
+    }
+  ]
+}
