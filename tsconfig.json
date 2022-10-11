@@ -3,5 +3,6 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "types": ["vitest/globals", "jest", "@testing-library/jest-dom"],
+    "resolveJsonModule": true,
   }
 }

@@ -6,7 +6,11 @@
       noopener
       class="h-min m-4 max-w-xs rounded overflow-hidden shadow-lg cursor-pointer"
     >
-      <!-- <img class="w-full" v-bind:src="article.urlToImage" alt="" /> -->
+      <img
+        class="w-full"
+        :v-bind:src="article.urlToImage"
+        alt="article poster"
+      />
       <div class="px-6 py-4">
         <div class="font-bold text-xl mb-2">{{ article.title }}</div>
         <p class="text-gray-700 text-base">
@@ -19,6 +23,8 @@
             <Spinner />
           </div>
           <div v-else>
+            <!-- <button type="submit" v-if="isArticleSaved" outline>Saved</button>
+            <button type="submit" v-else>Save</button> -->
             <va-button type="submit" v-if="isArticleSaved" outline
               >Saved</va-button
             >
