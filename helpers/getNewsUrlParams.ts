@@ -17,6 +17,7 @@ function getNewsUrlParams({
   if (search && search !== '') {
     return searchUrl + `?sortBy=relevancy&q=${search}`
   } else {
+    if (country === '' && category === '') return (baseUrl += `?country=us`)
     if (country && country !== '') baseUrl += `?country=${country}`
     if (category && category !== '') {
       baseUrl += country !== '' ? '&' : '?' // add symbol based on past param

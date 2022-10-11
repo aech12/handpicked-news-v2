@@ -8,7 +8,7 @@
     >
       <img
         class="w-full"
-        :v-bind:src="article.urlToImage"
+        v-bind:src="article.urlToImage"
         alt="article poster"
       />
       <div class="px-6 py-4">

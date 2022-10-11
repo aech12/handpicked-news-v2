@@ -43,7 +43,7 @@
 <script setup>
 const page = ref(1)
 // inputs state
-const search = ref('argentina football')
+const search = ref('')
 const countrySelected = ref('')
 const countries = ref([
   { text: 'China', paramVal: 'cn' },

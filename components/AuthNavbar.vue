@@ -42,8 +42,6 @@ const client = useSupabaseClient()
 const router = useRouter()
 const route = useRoute()
 
-console.log(route.path === '/saved')
-console.log(route.path === 'saved')
 async function handleSignout() {
   await client.auth.signOut()
   router.push({ path: '/login' })

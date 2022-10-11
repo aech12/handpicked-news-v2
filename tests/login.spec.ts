@@ -30,8 +30,8 @@ test('correct login redirects to /app', async ({ page }) => {
 
   // fill inputs
   await page.locator('[data-testid="email"]').click();
-  await page.locator('[data-testid="password"]').click();
   await page.locator('[data-testid="email"]').fill('aech-12@hotmail.com');
+  await page.locator('[data-testid="password"]').click();
   await page.locator('[data-testid="password"]').fill('test1234');
 
   // submit and redirect
