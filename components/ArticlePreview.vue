@@ -1,7 +1,7 @@
 <template>
   <li class="row" v-if="article">
     <a
-      :src="article.url"
+      :href="article.url"
       noreferrer
       noopener
       class="h-min m-4 max-w-xs rounded overflow-hidden shadow-lg cursor-pointer"
@@ -23,12 +23,12 @@
             <Spinner />
           </div>
           <div v-else>
-            <!-- <button type="submit" v-if="isArticleSaved" outline>Saved</button>
-            <button type="submit" v-else>Save</button> -->
-            <va-button type="submit" v-if="isArticleSaved" outline
+            <button type="submit" v-if="isArticleSaved" outline>Saved</button>
+            <button type="submit" v-else>Save</button>
+            <va-button data-testid="saved" v-if="isArticleSaved" outline
               >Saved</va-button
             >
-            <va-button type="submit" v-else> Save </va-button>
+            <va-button v-else> Save </va-button>
           </div>
         </form>
         <p v-if="error" class="text-red-400">ERROR! {{ error.message }}</p>

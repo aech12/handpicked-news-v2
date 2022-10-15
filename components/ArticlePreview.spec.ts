@@ -1,6 +1,7 @@
 import { render, fireEvent } from '@testing-library/vue'
 import Component from './ArticlePreview.vue'
 import { faker } from '@faker-js/faker'
+import { getRoles } from '@testing-library/dom'
 
 const global = {
   stubs: {
@@ -49,19 +50,19 @@ test('save button renders', async () => {
     global,
   })
 
-  getByRole('button', { name: /save/i })
+  getByRole('button', { name: /save$/i })
   expect(await queryByRole('button', { name: /saved/i })).toBeNull()
   // debug(container)
 })
 
 test('if article has title included in savedArticles, Saved button renders', async () => {
-  const { queryByRole, getByRole, getByText } = render(Component, {
-    props: { article: articleMock, savedArticles: [{ title: randomTitle }] },
-    global,
-  })
+  const { queryByRole, getByRole, getByText, getByDisplayValue, getByTestId } =
+    render(Component, {
+      props: { article: articleMock, savedArticles: [{ title: randomTitle }] },
+      global,
+    })
 
-  // first make sure article has title
-  getByText(randomTitle)
   getByRole('button', { name: /saved/i })
-  expect(await queryByRole('button', { name: /save/i })).toBeNull()
+  expect(await queryByRole('button', { name: /save$/i })).toBeNull()
+  // console.log(getRoles(getByTestId('saved')))
 })

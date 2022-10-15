@@ -21,7 +21,7 @@ test('/app should redirect to /login, and have signout button', async ({ page })
   await expect(page).toHaveURL('http://localhost:3000/login');
 });
 
-test('/app should redirect to /login, and have signout button', async ({ page }) => {
+test('/app should redirect to /login, and have signout button s', async ({ page }) => {
   await page.goto('http://localhost:3000/app');
   await expect(page).toHaveURL('http://localhost:3000/login');
 
