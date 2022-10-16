@@ -1,7 +1,7 @@
-import { render, fireEvent } from '@testing-library/vue'
-import Component from './Example.vue'
-import { prettyDOM } from '@testing-library/dom'
+import { render, fireEvent, prettyDOM } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
+
+import Component from './Example.vue'
 
 test('properly handles v-model', async () => {
   const { getByLabelText, getByText } = render(Component)
@@ -35,13 +35,13 @@ test('button clicks', async () => {
   const wrapper = render(Component)
   const { getByTestId } = wrapper
 
-  const btn = getByTestId('num-btn')
-  await fireEvent.click(btn)
+  const button = getByTestId('num-btn')
+  await fireEvent.click(button)
 
   expect(getByTestId('num-p')).toHaveTextContent('2')
 
   const user = userEvent.setup()
-  await user.click(btn)
+  await user.click(button)
   expect(getByTestId('num-p')).toHaveTextContent('3')
   // console.log(prettyDOM(getByTestId('num-p')))
 })

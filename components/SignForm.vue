@@ -3,7 +3,6 @@ export default {
   props: {
     login: Function,
     signUp: Function,
-    checkEmail: false,
   },
   data: () => ({
     email: '',
@@ -11,6 +10,7 @@ export default {
     isSignUp: false,
     pending: false,
     error_auth: null,
+    checkEmailMsg: false,
   }),
   methods: {
     async sign() {
@@ -22,9 +22,9 @@ export default {
           : await this.login(this.email, this.password)
       if (error) this.error_auth = error.message
 
-      this.checkEmail = true
+      this.checkEmailMsg = true
       setTimeout(function () {
-        this.checkEmail = false
+        this.checkEmailMsg = false
       }, 4000)
 
       this.pending = false
@@ -85,6 +85,6 @@ export default {
         </va-button>
       </div>
     </form>
-    <p v-if="checkEmail">Check your email!</p>
+    <p v-if="checkEmailMsg">Check your email!</p>
   </div>
 </template>

@@ -56,7 +56,7 @@ test('save button renders', async () => {
 })
 
 test('if article has title included in savedArticles, Saved button renders', async () => {
-  const { queryByRole, getByRole, getByText, getByDisplayValue, getByTestId } =
+  const { queryByRole, getByRole, getByTestId } =
     render(Component, {
       props: { article: articleMock, savedArticles: [{ title: randomTitle }] },
       global,

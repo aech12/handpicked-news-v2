@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/vue'
 import { faker } from '@faker-js/faker'
-import SignForm from './SignForm.vue'
 import userEvent from '@testing-library/user-event'
-import { prettyDOM } from '@testing-library/dom'
+
+import SignForm from './SignForm.vue'
 
 describe('Login page', () => {
   afterEach(() => {
@@ -68,8 +68,7 @@ describe('Login page', () => {
   test('form switches from login to sign up', async () => {
     const user = userEvent.setup()
 
-    
-    const {getByText, getByTestId, getByDisplayValue } = render(SignForm)
+    const { getByText, getByTestId } = render(SignForm)
 
     expect(getByText('Login')).toBeInTheDocument()
 
@@ -102,7 +101,5 @@ describe('Login page', () => {
 
     expect(signUp).toHaveBeenCalledTimes(0)
     // expect(login).toHaveBeenCalledTimes(1)
-
-    // console.log(prettyDOM(wrapper))
   })
 })

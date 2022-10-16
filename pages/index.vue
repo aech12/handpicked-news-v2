@@ -1,5 +1,5 @@
 <template>
-  <h1 data-testid="h1">Home!</h1>
+  <h1 data-testid="h1" class="p-2 w-full text-center text-2xl">Home!</h1>
 </template>
 
 <script>

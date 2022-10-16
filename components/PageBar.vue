@@ -1,6 +1,6 @@
 <template>
   <div class="my-2">
-    <va-button @click="previousPage()" outline class="mr-2 mb-2"
+    <va-button data-testid="prevpage" @click="previousPage()" outline class="mr-2 mb-2"
       >&lt;</va-button
     >
     <va-button outline class="mr-2 mb-2">{{ page }}</va-button>

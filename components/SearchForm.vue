@@ -11,7 +11,13 @@
       class="block p-2 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500"
     />
     <!-- <button type="submit" :rounded="false">Find</button> -->
-    <va-button type="submit" :rounded="false">Find</va-button>
+    <button
+      class="text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full px-4 py-2 text-center mr-2 mb-2"
+      type="submit"
+      :rounded="false"
+    >
+      Find
+    </button>
   </form>
 </template>
 
