@@ -1,41 +1,87 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '@playwright/test'
+import { faker } from '@faker-js/faker'
 
-test('form switches from Login to Signup', async ({ page }) => {
-  // Click [data-testid="swapSignup"]
-  await page.locator('[data-testid="swapSignup"]').click();
-  // Click text=Sign up
-  await page.locator('text=Sign up').click();
-});
+// const email = process.env.TEST_EMAIL
+// const password = process.env.TEST_PASSWORD
+const email = 'aech-12@hotmail.com'
+const password = 'test1234'
 
-test('wrong mail/password fails login', async ({ page }) => {
-  // Go to http://localhost:3000/login
-  await page.goto('http://localhost:3000/login');
+test('initial form state is for Login', async ({ page }) => {
+  await page.goto('./login')
 
-  // Fill [data-testid="email"]
-  await page.locator('[data-testid="email"]').click();
-  await page.locator('[data-testid="email"]').fill('fake@mail.com');
-  // Fill [data-testid="password"]
-  await page.locator('[data-testid="email"]').press('Tab');
-  await page.locator('[data-testid="password"]').fill('fakepass1234');
+  await page.getByRole('heading', { name: 'Login' }).click()
+})
 
-  // Sub,ot
-  await page.locator('[data-testid="submit"]').click();
-  // Click text=Invalid login credentials
-  await page.locator('text=Invalid login credentials').click();
-});
+test('form starts at Login and switches to Signup', async ({ page }) => {
+  await page.goto('./login')
 
-test('correct login redirects to /app', async ({ page }) => {
-  // form is in Login mode
-  await page.locator('h1:has-text("Login")').click();
+  await page.getByText('Create a new account').click()
+  await page.getByRole('heading', { name: 'Sign up' }).click()
+})
 
-  // fill inputs
-  await page.locator('[data-testid="email"]').click();
-  await page.locator('[data-testid="email"]').fill('aech-12@hotmail.com');
-  await page.locator('[data-testid="password"]').click();
-  await page.locator('[data-testid="password"]').fill('test1234');
+test.describe('form wrong submit attempts', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('./login')
+  })
 
-  // submit and redirect
-  await page.locator('[data-testid="submit"]').click();
-  await expect(page).toHaveURL('http://localhost:3000/app');
-  // await expect(page).toHaveURL(/.*app/)
-});
+  test('form does NOT submit if email is empty', async ({ page }) => {
+    await page.getByRole('heading', { name: 'Login' })
+    await page.getByTestId('email').fill('')
+    await page.getByTestId('password').fill('')
+
+    await page.getByText('Submit').click()
+    expect(page.url()).toContain('/login')
+  })
+
+  test('form does NOT submit if password is empty', async ({ page }) => {
+    await page.getByRole('heading', { name: 'Login' })
+    await page.getByTestId('email').fill(faker.datatype.string(16))
+    await page.getByTestId('password').fill('')
+
+    await page.getByText('Submit').click()
+    expect(page.url()).toContain('/login')
+  })
+
+  test('form does NOT submit if credentials are incorrect', async ({
+    page,
+  }) => {
+    const invalidEmail = faker.datatype.string(16)
+    const invalidPass = faker.datatype.string(16)
+
+    await page.getByRole('heading', { name: 'Login' })
+    await page.getByTestId('email').fill(invalidEmail)
+    await page.getByTestId('password').fill(invalidPass)
+
+    await page.getByText('Submit').click()
+    expect(page.url()).toContain('/login')
+  })
+})
+
+test.describe('form succesful functionality', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('./login')
+  })
+
+  test('login form submits and redirects to app', async ({ page }) => {
+    await page.getByTestId('email').fill('aech-12@hotmail.com')
+    await page.getByTestId('password').fill('test1234')
+    await page.getByTestId('submit').click()
+    await page.getByRole('heading', { name: 'News' }).click()
+    // await expect(page).toHaveURL('http://localhost:3000/app')
+    await expect(page.url()).not.toContain('/login')
+    await expect(page.url()).toContain('/app')
+  })
+
+  test('form shows Check mail message on signup', async ({ page }) => {
+    const randomEmail = faker.datatype.string(16)
+    const randomPass = faker.datatype.string(16)
+
+    await page.getByText('Create a new account').click()
+    await page.getByRole('heading', { name: 'Sign up' })
+    await page.getByTestId('email').fill(randomEmail)
+    await page.getByTestId('password').fill(randomPass)
+
+    await page.getByText('Submit').click()
+    await page.getByText('Check your email!')
+  })
+})

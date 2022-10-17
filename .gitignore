@@ -11,3 +11,5 @@ dist
 /playwright/.cache/
 .eslintcache
 coverage
+
+auth.json

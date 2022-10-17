@@ -1,10 +1,6 @@
-import { test, expect } from '@playwright/test'
+import { test } from '@playwright/test'
 
-test('home page renders a title', async ({
-  page,
-}) => {
+test('home page renders a title', async ({ page }) => {
   await page.goto('./')
-  
-  const title =  await page.locator('data-testid=h1');
-  await expect(title).toHaveText("Home!")
+  await page.getByText('Home!')
 })
