@@ -16,7 +16,7 @@ test('form starts at Login and switches to Signup', async ({ page }) => {
   await page.goto('./login')
 
   await page.getByText('Create a new account').click()
-  await page.getByRole('heading', { name: 'Sign up' }).click()
+  await page.getByRole('heading', { name: 'Sign up' })
 })
 
 test.describe('form wrong submit attempts', () => {

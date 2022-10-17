@@ -1,109 +1,73 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, screen } from '@playwright/test'
 
-const validEmail = "aech-12@hotmail.com"
-const validPass = ""
-test('/app should redirect to /login, and have signout button', async ({ page }) => {
-  await page.goto('http://localhost:3000/app');
-  await expect(page).toHaveURL('http://localhost:3000/login');
+test('if user is NOT logged-in, show /login page', async ({ page }) => {
+  await page.goto('./app')
+  await expect(page.url()).not.toContain('/app')
+  await expect(page.url()).toContain('/login')
+})
 
-  // fill inputs
-  await page.getByTestId('email').click();
-  await page.getByTestId('email').fill(validEmail);
+test.describe('inputs functionality', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('./login')
+    await page.getByTestId('email').fill('aech-12@hotmail.com')
+    await page.getByTestId('password').fill('test1234')
+    await page.getByTestId('submit').click()
+  })
 
-  await page.getByTestId('password').click();
-  await page.getByTestId('password').fill(validPass);
+  test('/app renders', async ({ page }) => {
+    await page.getByRole('heading', { name: 'News' }).click()
+    await expect(page.url()).not.toContain('/login')
+    await expect(page.url()).toContain('/app')
+  })
 
-  // submit form
-  await page.getByTestId('submit').click();
-  await expect(page).toHaveURL('http://localhost:3000/app');
+  test('inputs render', async ({ page }) => {
+    await page.getByPlaceholder('search news')
+    await page.locator('select[name="category"]').selectOption('business')
+    await page.locator('select[name="country"]').selectOption('cn')
+  })
+})
 
-  await page.getByRole('button', { name: 'Log out' }).click();
-  await expect(page).toHaveURL('http://localhost:3000/login');
-});
+test.describe('inputs functionality', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('./login')
+    await page.getByTestId('email').fill('aech-12@hotmail.com')
+    await page.getByTestId('password').fill('test1234')
+    await page.getByTestId('submit').click()
+  })
 
-test('/app should redirect to /login, and have signout button s', async ({ page }) => {
-  await page.goto('http://localhost:3000/app');
-  await expect(page).toHaveURL('http://localhost:3000/login');
+  test('/app renders with global setup login', async ({ page }) => {
+    await page.getByPlaceholder('search news').fill('some string')
+    await page.getByRole('button', { name: 'Find' }).click()
 
-  // fill inputs
-  await page.getByTestId('email').click();
-  await page.getByTestId('email').fill(validEmail);
+    // fetch message should show before results show
+    await page.getByText('Fetching...')
+    await page.getByRole('button', { name: 'Save' })
+  })
 
-  await page.getByTestId('password').click();
-  await page.getByTestId('password').fill(validPass);
+  test('input click fetches articles', async ({ page }) => {
+    // test search, then select inputs
+    await page.getByPlaceholder('search news').fill('some string')
+    await page.getByRole('button', { name: 'Find' }).click()
+    await page.getByText('Fetching...')
+    await page.getByRole('button', { name: 'Save' })
 
-  // submit form
-  await page.getByTestId('submit').click();
-  await expect(page).toHaveURL('http://localhost:3000/app');
+    await page.locator('select[name="category"]').selectOption('business')
+    await page.getByText('Fetching...')
+    await page.getByRole('button', { name: 'Save' })
 
-  await page.getByRole('button', { name: 'Log out' }).click();
-  await expect(page).toHaveURL('http://localhost:3000/login');
-});
+    await page.locator('select[name="country"]').selectOption('cn')
+    await page.getByText('Fetching...')
+    await page.getByRole('button', { name: 'Save' })
+  })
 
-test('search fetches articles', async ({ page }) => {
+  // test('articles can be saved', async ({ page }) => {
+  //   await page.getByRole('button', { name: 'Save' }).click()
+  //   await screen.getByText('button', { name: 'Saved' }).click()
+  // })
 
-  await page.goto('http://localhost:3000/login');
-
-  await page.getByTestId('email').click();
-  await page.getByTestId('email').fill('aech-12@hotmail.com');
-
-  await page.getByTestId('password').click();
-  await page.getByTestId('password').fill('test1234');
-
-  await page.getByTestId('submit').click();
-  await expect(page).toHaveURL('http://localhost:3000/app');
-
-  await page.getByRole('button', { name: 'Log out' }).click();
-  await expect(page).toHaveURL('http://localhost:3000/login');
-
-  await page.getByPlaceholder('search news').click();
-  await page.getByPlaceholder('search news').fill('football argentina');
-
-  await page.getByRole('button', { name: 'Find' }).click();
-  await page.getByText('Fetching...').click();
-
-  await page.getByRole('button', { name: 'Save' }).click();
-
-});
-
-
-test('select inputs fetch articles', async ({ page }) => {
-
-  await page.goto('http://localhost:3000/login');
-
-  await page.getByTestId('email').click();
-
-  await page.getByTestId('email').fill('aech-12@hotmail.com');
-
-  await page.getByTestId('password').click();
-
-  await page.getByTestId('password').fill('test1234');
-
-  await page.getByTestId('submit').click();
-  await expect(page).toHaveURL('http://localhost:3000/app');
-
-  await page.getByRole('button', { name: 'Log out' }).click();
-  await expect(page).toHaveURL('http://localhost:3000/login');
-
-  await page.getByPlaceholder('search news').click();
-
-  await page.getByPlaceholder('search news').fill('football argentina');
-
-  await page.getByRole('button', { name: 'Find' }).click();
-
-  await page.getByText('Fetching...').click();
-
-  await page.locator('a:has-text("Ukraine joins Spain and Portugal\'s 2030 World Cup bid - Reuters.comUkraine has j")').getByRole('button', { name: 'Save' }).click();
-
-  await page.locator('a:has-text("Ukraine joins Spain and Portugal\'s 2030 World Cup bid - Reuters.comUkraine has j")').click();
-
-  await page.locator('select[name="country"]').selectOption('nl');
-
-  await page.locator('select[name="category"]').selectOption('sports');
-
-  await page.getByRole('button', { name: 'Save' }).click();
-  // await page.locator('a:has-text("Alfred Schreuder gooit het roer niet om bij Ajax: \'Vasthouden aan eigen spelprin")').getByRole('button', { name: 'Save' }).click();
-
-  await page.getByPlaceholder('search news').click();
-
-});
+  // currently  articles dont redirect, they open a new page
+  //  test('click on an article redirects', async ({ page }) => {
+  //   await page.getByTestId("article-a").click();
+  //   await expect(page.url()).toContain('/app')
+  // })
+})

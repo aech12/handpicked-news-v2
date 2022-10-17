@@ -5,6 +5,7 @@
       noreferrer
       noopener
       class="h-min m-4 max-w-xs rounded overflow-hidden shadow-lg cursor-pointer"
+      data-testid="article-a"
     >
       <img
         class="w-full"

@@ -9,6 +9,7 @@
       :value="search"
       placeholder="search news"
       class="block p-2 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-md focus:ring-blue-500 focus:border-blue-500"
+      data-testid="search-input"
     />
     <!-- <button type="submit" :rounded="false">Find</button> -->
     <button

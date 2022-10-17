@@ -102,6 +102,11 @@ const config: PlaywrightTestConfig = {
     command: 'yarn start',
     port: 3000,
   },
+  globalSetup: require.resolve('./global-setup-pw'),
+  use: {
+    // Tell all tests to load signed-in state from 'storageState.json'.
+    storageState: 'storageState.json',
+  },
 }
 
 export default config
