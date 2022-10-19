@@ -59,11 +59,13 @@ export default {
   }),
   computed: {
     isArticleSaved: function () {
-      return this.savedArticles.filter(
-        item => item.title === this.article.title
-      ).length > 0
-        ? true
-        : false
+      if (this.savedArticles && this.savedArticles.length) {
+        return this.savedArticles.filter(
+          item => item.title === this.article.title
+        ).length > 0
+          ? true
+          : false
+      } else return []
     },
   },
   methods: {
