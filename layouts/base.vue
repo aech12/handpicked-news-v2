@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-800 text-white">
+  <div class="bg-gray-800 text-white min-h-screen">
     <!-- <NuxtLink to="/">home </NuxtLink>
     <NuxtLink to="app">app </NuxtLink>
     <NuxtLink to="login">login </NuxtLink>

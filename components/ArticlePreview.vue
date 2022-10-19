@@ -8,13 +8,14 @@
       data-testid="article-a"
     >
       <img
+        v-if="article?.urlToImage"
         class="w-full"
         v-bind:src="article.urlToImage"
         alt="article poster"
       />
       <div class="px-6 py-4">
         <div class="font-bold text-xl mb-2">{{ article.title }}</div>
-        <p class="text-gray-700 text-base">
+        <p class="text-gray-300 text-base">
           {{ article.description }}
         </p>
       </div>
@@ -25,7 +26,7 @@
           </div>
           <div v-else>
             <button
-              class="text-white border border-gray-200 hover:bg-gray-100 text-gray-900 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full px-4 py-2 text-center mr-2 mb-2"
+              class="text-white border border-gray-200 hover:bg-gray-100 hover:text-gray-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full px-4 py-2 text-center mr-2 mb-2"
               type="submit"
               v-if="isArticleSaved"
               outline
@@ -39,10 +40,6 @@
             >
               Save
             </button>
-            <!-- <va-button data-testid="saved" v-if="isArticleSaved" outline
-              >Saved</va-button
-            >
-            <va-button v-else> Save </va-button> -->
           </div>
         </form>
         <p v-if="error" class="text-red-400">ERROR! {{ error.message }}</p>
@@ -65,7 +62,7 @@ export default {
         ).length > 0
           ? true
           : false
-      } else return []
+      } else return false
     },
   },
   methods: {

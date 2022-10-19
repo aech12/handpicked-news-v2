@@ -1,10 +1,10 @@
 <template>
   <div class="max-w-3xl mx-auto mt-2 flex flex-col text-center items-center">
-    <h2 class="text-3xl text-black w-full">News</h2>
+    <h2 class="text-3xl text-white w-full">News</h2>
     <div
       class="my-2 w-full max-w-xl flex flex-col md:items-center md:flex-row md:space-between space-y-2 md:space-y-0"
     >
-      <div class="flex space-x-2 mx-2">
+      <div class="flex space-x-2 mx-2 sm:mx-0">
         <ListSelect
           name="country"
           :selected="countrySelected"

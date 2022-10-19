@@ -1,10 +1,10 @@
 <template>
-  <nav class="bg-black px-2 sm:px-4 sm:py-2 border-2 border-cyan-500">
+  <nav class="bg-black px-2 sm:px-4 pb-2 py-1 sm:py-2 border-2 border-cyan-500">
     <div
       class="w-full max-w-3xl container flex flex-wrap flex-col sm:flex-row justify-center sm:justify-between items-center mx-auto"
     >
-      <div class="">
-        <NuxtLink to="/app">
+      <div class="pr-3.5 sm:pr-0">
+        <NuxtLink to="/">
           <img src="~/assets/logo.png" />
         </NuxtLink>
       </div>
