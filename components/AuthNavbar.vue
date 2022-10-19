@@ -2,9 +2,10 @@
   <va-navbar color="dark">
     <template #left>
       <NuxtLink to="/app">
-        <va-navbar-item class="text-lg hover:text-blue-400 transition"
+        <img src="~/assets/logo.png" />
+        <!-- <va-navbar-item class="text-lg hover:text-blue-400 transition"
           >PickedNEWS</va-navbar-item
-        >
+        > -->
       </NuxtLink>
     </template>
     <template #center>

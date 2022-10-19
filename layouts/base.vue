@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="bg-gray-800">
     <!-- <NuxtLink to="/">home </NuxtLink>
     <NuxtLink to="app">app </NuxtLink>
     <NuxtLink to="login">login </NuxtLink>

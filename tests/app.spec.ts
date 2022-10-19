@@ -22,8 +22,10 @@ test.describe('inputs functionality', () => {
 
   test('inputs render', async ({ page }) => {
     await page.getByPlaceholder('search news')
-    await page.locator('select[name="category"]').selectOption('business')
-    await page.locator('select[name="country"]').selectOption('cn')
+    await page.getByText('Business')
+    await page.getByText('China')
+    // await page.locator('select[name="category"]').selectOption('business')
+    // await page.locator('select[name="country"]').selectOption('cn')
   })
 })
 

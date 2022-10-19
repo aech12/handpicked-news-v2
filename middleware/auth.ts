@@ -1,11 +1,12 @@
 export default defineNuxtRouteMiddleware(to => {
   const user = useSupabaseUser()
 
-  if (!user.value && to.path !== '/login') {
-    return navigateTo('/login')
-  } else if (user.value && to.path === '/login') {
-    return navigateTo('app')
-  } else if (user.value && to.path === '/home') {
-    return navigateTo('app')
+  // if user is NOT logged-in, show all pages
+  // if (!user.value && to.path !== '/login') {
+  //   return navigateTo('/login')
+  // }
+  // if user is logged-in, don't show /login page
+  if (user.value && to.path === '/login') {
+    return navigateTo('/')
   }
 })
