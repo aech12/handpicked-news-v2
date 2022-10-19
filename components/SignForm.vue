@@ -14,15 +14,16 @@ export default {
   }),
   methods: {
     async sign() {
+      const signUpRoute = this.isSignUp === true
       this.pending = true
 
       const { user, error } =
-        this.isSignUp === true
+        signUpRoute === true
           ? await this.signUp(this.email, this.password)
           : await this.login(this.email, this.password)
       if (error) this.error_auth = error.message
 
-      this.checkEmailMsg = true
+      if (signUpRoute) this.checkEmailMsg = true
       setTimeout(function () {
         this.checkEmailMsg = false
       }, 4000)
@@ -35,7 +36,7 @@ export default {
 
 <template>
   <div class="max-w-lg mx-auto mt-8 flex flex-col text-center items-center">
-    <h1 class="text-3xl text-black w-full">
+    <h1 class="text-3xl w-full">
       {{ isSignUp ? 'Sign up' : 'Login' }}
     </h1>
     <form
@@ -70,7 +71,7 @@ export default {
           {{ error_auth }}
         </p>
         <va-button
-          text-color="dark"
+          text-color="secondary"
           flat
           class="mr-2 mb-2"
           @click="isSignUp = !isSignUp"

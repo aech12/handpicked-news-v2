@@ -35,8 +35,8 @@ const removeSavedArticle = async (article): Promise<any> => {
 
 <template>
   <div class="max-w-5xl mx-auto mt-2 flex flex-col text-center items-center">
-    <h2 class="text-3xl text-black w-full">Saved</h2>
-    <div class="w-full my-[50px]">
+    <h2 class="my-2 text-3xl w-full">Saved</h2>
+    <div class="my-2 w-full">
       <div
         v-if="savedArticles.length > 0"
         body-class="px-6 py-2 overflow-hidden"
@@ -44,12 +44,13 @@ const removeSavedArticle = async (article): Promise<any> => {
         <ul
           class="w-full px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
         >
-          <li
-            v-for="article of savedArticles"
-            :key="article.id"
-           
-          >
-            <a src="article.url" noreferrer noopener  class="bg-gray-100 flex flex-col items-center rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-gray-100 cursor-pointer">
+          <li v-for="article of savedArticles" :key="article.id">
+            <a
+              src="article.url"
+              noreferrer
+              noopener
+              class="bg-gray-900 flex flex-col items-center rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-gray-800 cursor-pointer"
+            >
               <img
                 v-bind:src="article.urlToImage"
                 class="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"

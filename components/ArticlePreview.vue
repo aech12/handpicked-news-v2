@@ -4,7 +4,7 @@
       :href="article.url"
       noreferrer
       noopener
-      class="h-min m-4 max-w-xs rounded overflow-hidden shadow-lg cursor-pointer"
+      class="h-min m-4 max-w-xs bg-gray-900 rounded overflow-hidden shadow-lg cursor-pointer"
       data-testid="article-a"
     >
       <img

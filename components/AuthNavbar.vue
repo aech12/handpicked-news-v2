@@ -21,7 +21,7 @@
               @click="handleSignout"
               class="w-24 h-8 flex-none text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-300 rounded-sm font-bold hover:bg-cyan-700 focus:outline-none focus:ring-cyan-800"
             >
-              <NuxtLink to="/login"> Log out </NuxtLink>
+              <NuxtLink to="/"> Log out </NuxtLink>
             </button>
           </div>
           <button

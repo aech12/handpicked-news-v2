@@ -4,6 +4,7 @@ import resMock from '~/tests/mocks/getArticlesResponse.json'
 
 const baseUrl = 'https://newsapi.org/v2/top-headlines'
 const searchUrl = 'https://newsapi.org/v2/everything'
+const pageSize = 12
 
 export default defineEventHandler(async event => {
   //   throw new Error();
@@ -21,7 +22,7 @@ export default defineEventHandler(async event => {
   })
 
   // console.log('URL', url)
-  url += `&page=${page}&apiKey=${config.NEWSAPI_KEY}`
+  url += `&pageSize=${pageSize}&page=${page}&apiKey=${config.NEWSAPI_KEY}`
 
   return resMock.articles
   // const res = await $fetch(url)
