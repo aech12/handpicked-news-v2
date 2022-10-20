@@ -125,5 +125,11 @@
         "ignores": ["default", "index"]
       }
     ]
-  }
+  },
+  "prettier/prettier": [
+    "error",
+    {
+      "endOfLine": "auto"
+    }
+  ]
 }

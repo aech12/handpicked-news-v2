@@ -3,7 +3,6 @@ export default {
   props: {
     login: Function,
     signUp: Function,
-    checkEmail: false,
   },
   data: () => ({
     email: '',
@@ -11,20 +10,22 @@ export default {
     isSignUp: false,
     pending: false,
     error_auth: null,
+    checkEmailMsg: false,
   }),
   methods: {
     async sign() {
+      const signUpRoute = this.isSignUp === true
       this.pending = true
 
       const { user, error } =
-        this.isSignUp === true
+        signUpRoute === true
           ? await this.signUp(this.email, this.password)
           : await this.login(this.email, this.password)
       if (error) this.error_auth = error.message
 
-      this.checkEmail = true
+      if (signUpRoute) this.checkEmailMsg = true
       setTimeout(function () {
-        this.checkEmail = false
+        this.checkEmailMsg = false
       }, 4000)
 
       this.pending = false
@@ -35,7 +36,7 @@ export default {
 
 <template>
   <div class="max-w-lg mx-auto mt-8 flex flex-col text-center items-center">
-    <h1 class="text-3xl text-black w-full">
+    <h1 class="text-3xl w-full">
       {{ isSignUp ? 'Sign up' : 'Login' }}
     </h1>
     <form
@@ -70,21 +71,21 @@ export default {
           {{ error_auth }}
         </p>
         <va-button
-          text-color="dark"
+          text-color="secondary"
           flat
-          class="mr-2 mb-2"
+          class=""
           @click="isSignUp = !isSignUp"
           data-testid="swapSignup"
         >
           <span v-if="isSignUp"> Log in instead </span>
           <span v-else> Create a new account </span>
         </va-button>
-        <va-button class="mr-4 mb-2" type="submit" data-testid="submit">
+        <va-button class="" type="submit" data-testid="submit">
           <Spinner v-if="pending" />
           <span v-else> Submit </span>
         </va-button>
       </div>
     </form>
-    <p v-if="checkEmail">Check your email!</p>
+    <p v-if="checkEmailMsg">Check your email!</p>
   </div>
 </template>

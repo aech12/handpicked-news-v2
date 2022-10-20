@@ -1,39 +1,39 @@
 <template>
-  <va-navbar color="dark">
-    <template #left>
-      <NuxtLink to="/app">
-        <va-navbar-item class="text-lg hover:text-blue-400 transition"
-          >PickedNEWS</va-navbar-item
-        >
-      </NuxtLink>
-    </template>
-    <template #center>
-      <va-navbar-item></va-navbar-item>
-    </template>
-    <template #right>
-      <div v-if="user" class="space-x-2">
-        <NuxtLink v-if="route.path === '/saved'" to="/app">
-          <va-button outline :rounded="false" color="white" text-color="white">
-            News
-          </va-button>
+  <nav class="bg-black px-2 sm:px-4 pb-2 py-1 sm:py-2 border-2 border-cyan-500">
+    <div
+      class="w-full max-w-3xl container flex flex-wrap flex-col sm:flex-row justify-center sm:justify-between items-center mx-auto"
+    >
+      <div class="pr-3.5 sm:pr-0">
+        <NuxtLink to="/">
+          <img src="~/assets/logo.png" />
         </NuxtLink>
-        <NuxtLink v-else to="/saved">
-          <va-button
-            outline
-            :rounded="false"
-            color="white"
-            text-color="white"
-          >
-            Saved
-          </va-button>
-        </NuxtLink>
-        <va-button :rounded="false" @click="handleSignout"> Log out </va-button>
       </div>
-      <NuxtLink v-else to="/login">
-        <va-button :rounded="false"> Login </va-button>
-      </NuxtLink>
-    </template>
-  </va-navbar>
+      <div class="">
+        <div class="ml-auto w-min">
+          <div v-if="user" class="space-x-2 flex">
+            <button
+              class="w-24 h-8 border-2 border-white flex-none text-white bg-transparent hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 rounded-sm font-bold hover:bg-gray-700 focus:outline-none focus:ring-gray-800"
+            >
+              <NuxtLink v-if="inRouteSaved" to="/"> News </NuxtLink>
+              <NuxtLink v-else to="/saved"> Saved </NuxtLink>
+            </button>
+            <button
+              @click="handleSignout"
+              class="w-24 h-8 flex-none text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-300 rounded-sm font-bold hover:bg-cyan-700 focus:outline-none focus:ring-cyan-800"
+            >
+              <NuxtLink to="/"> Log out </NuxtLink>
+            </button>
+          </div>
+          <button
+            v-else
+            class="w-24 h-8 flex-none text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-300 rounded-sm font-bold hover:bg-cyan-700 focus:outline-none focus:ring-cyan-800"
+          >
+            <NuxtLink to="/login"> Login </NuxtLink>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
 </template>
 
 <script setup>
@@ -41,6 +41,8 @@ const user = useSupabaseUser()
 const client = useSupabaseClient()
 const router = useRouter()
 const route = useRoute()
+
+const inRouteSaved = computed(() => route.path === '/saved')
 
 async function handleSignout() {
   await client.auth.signOut()

@@ -1,11 +1,12 @@
 export default defineNuxtRouteMiddleware(to => {
   const user = useSupabaseUser()
 
-  if (!user.value && to.path !== '/login') {
+  // protected routes
+  if (!user.value && to.path === '/saved') {
     return navigateTo('/login')
-  } else if (user.value && to.path === '/login') {
-    return navigateTo('app')
-  } else if (user.value && to.path === '/home') {
-    return navigateTo('app')
+  }
+  // invalid routes (if user is logged in)
+  if (user.value && to.path === '/login') {
+    return navigateTo('/')
   }
 })

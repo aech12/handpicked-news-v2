@@ -1,19 +1,21 @@
 <template>
   <li class="row" v-if="article">
     <a
-      :src="article.url"
+      :href="article.url"
       noreferrer
       noopener
-      class="h-min m-4 max-w-xs rounded overflow-hidden shadow-lg cursor-pointer"
+      class="h-min m-4 max-w-xs bg-gray-900 rounded overflow-hidden shadow-lg cursor-pointer"
+      data-testid="article-a"
     >
       <img
+        v-if="article?.urlToImage"
         class="w-full"
         v-bind:src="article.urlToImage"
         alt="article poster"
       />
       <div class="px-6 py-4">
         <div class="font-bold text-xl mb-2">{{ article.title }}</div>
-        <p class="text-gray-700 text-base">
+        <p class="text-gray-300 text-base">
           {{ article.description }}
         </p>
       </div>
@@ -23,12 +25,21 @@
             <Spinner />
           </div>
           <div v-else>
-            <!-- <button type="submit" v-if="isArticleSaved" outline>Saved</button>
-            <button type="submit" v-else>Save</button> -->
-            <va-button type="submit" v-if="isArticleSaved" outline
-              >Saved</va-button
+            <button
+              class="text-white border border-gray-200 hover:bg-gray-100 hover:text-gray-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full px-4 py-2 text-center mr-2 mb-2"
+              type="submit"
+              v-if="isArticleSaved"
+              outline
             >
-            <va-button type="submit" v-else> Save </va-button>
+              Saved
+            </button>
+            <button
+              class="text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full px-4 py-2 text-center mr-2 mb-2"
+              type="submit"
+              v-else
+            >
+              Save
+            </button>
           </div>
         </form>
         <p v-if="error" class="text-red-400">ERROR! {{ error.message }}</p>
@@ -45,11 +56,13 @@ export default {
   }),
   computed: {
     isArticleSaved: function () {
-      return this.savedArticles.filter(
-        item => item.title === this.article.title
-      ).length > 0
-        ? true
-        : false
+      if (this.savedArticles && this.savedArticles.length) {
+        return this.savedArticles.filter(
+          item => item.title === this.article.title
+        ).length > 0
+          ? true
+          : false
+      } else return false
     },
   },
   methods: {

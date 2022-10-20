@@ -5,7 +5,8 @@ import SignForm from '../components/SignForm.vue'
 definePageMeta({
   middleware: ['auth'],
   layout: 'base',
-  pageTransition: { name: 'page', mode: 'out-in' },
+  pageTransition: { name: 'fade', mode: 'out-in' },
+  layoutTransition: { name: 'slide', mode: 'out-in' },
 })
 
 const client = useSupabaseClient()
@@ -20,7 +21,7 @@ const user = useSupabaseUser()
 onMounted(() => {
   watchEffect(() => {
     if (user.value) {
-      navigateTo('/app')
+      navigateTo('/')
     }
   })
 })
