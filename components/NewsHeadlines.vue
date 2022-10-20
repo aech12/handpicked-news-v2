@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="my-2">
     <p v-if="pending" class="pb-4 pt-2">Fetching...</p>
     <div v-else-if="error" class="pb-4 pt-2">
       <p>Error fetching</p>

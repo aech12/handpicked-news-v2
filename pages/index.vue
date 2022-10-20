@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-3xl mx-auto mt-2 flex flex-col text-center items-center">
-    <h2 class="text-3xl text-white w-full">News</h2>
+    <h2 class="mt-2 text-3xl text-white w-full">News</h2>
     <div
       class="my-2 w-full max-w-xl flex flex-col md:items-center md:flex-row md:space-between space-y-2 md:space-y-0"
     >
@@ -47,6 +47,8 @@ const search = ref('')
 const countrySelected = ref('')
 const countries = ref([
   { text: 'China', paramVal: 'cn' },
+  { text: 'Brazil', paramVal: 'br' },
+  { text: 'Great Britain', paramVal: 'gb' },
   { text: 'Netherlands', paramVal: 'nl' },
   { text: 'Singapore', paramVal: 'si' },
   { text: 'USA', paramVal: 'us' },

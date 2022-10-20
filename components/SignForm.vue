@@ -73,14 +73,14 @@ export default {
         <va-button
           text-color="secondary"
           flat
-          class="mr-2 mb-2"
+          class=""
           @click="isSignUp = !isSignUp"
           data-testid="swapSignup"
         >
           <span v-if="isSignUp"> Log in instead </span>
           <span v-else> Create a new account </span>
         </va-button>
-        <va-button class="mr-4 mb-2" type="submit" data-testid="submit">
+        <va-button class="" type="submit" data-testid="submit">
           <Spinner v-if="pending" />
           <span v-else> Submit </span>
         </va-button>

@@ -52,6 +52,7 @@ const removeSavedArticle = async (article): Promise<any> => {
               class="bg-gray-900 flex flex-col items-center rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-gray-800 cursor-pointer"
             >
               <img
+                v-if="article?.urlToImage"
                 v-bind:src="article.urlToImage"
                 class="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
                 :title="article.title"

@@ -1,5 +1,5 @@
 <template>
-  <div class="my-2">
+  <div class="my-4">
     <va-button
       data-testid="prevpage"
       @click="previousPage()"
